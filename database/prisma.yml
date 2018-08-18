@@ -1,0 +1,2 @@
+endpoint: https://heroku-typescript-server.herokuapp.com/database/dev
+datamodel: datamodel.graphql
