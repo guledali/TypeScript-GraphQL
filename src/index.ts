@@ -9,10 +9,17 @@ interface Context {
 
 const resolvers = {
   Query: {
-    hello: (_, { name }) =>{
-      const returnValue = name ? `Nice to meet you ${name}` : "hello nobody"
-      return returnValue
+    feed: (parent, args, ctx: Context, info ) =>{
+      return ctx.db.query.posts({where: {isPublished:true}}, info)
+    }, 
+    drafts: (parent, args, ctx: Context, info ) =>{
+      return ctx.db.query.posts({where: {isPublished:false}} ,info)
     } 
+  },
+  Mutation: {
+    createDraft: (parent, { title, text }, ctx: Context, info) => {
+      return ctx.db.mutation.createPost({ data: { text, title, isPublished: false} }, info)
+    }
   }
 }
 
