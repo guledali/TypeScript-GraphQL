@@ -14,6 +14,9 @@ const resolvers = {
     }, 
     drafts: (parent, args, ctx: Context, info ) =>{
       return ctx.db.query.posts({where: {isPublished:false}} ,info)
+    }, 
+    post: (parent, { id }, ctx: Context, info ) =>{
+      return ctx.db.query.post({where: { id } } ,info)
     } 
   },
   Mutation: {
@@ -25,6 +28,9 @@ const resolvers = {
 
 const server = new GraphQLServer({
   typeDefs : './src/schema.graphql',
+  resolverValidationOptions: {
+    requireResolversForResolveType: false,
+  },
   resolvers,
   context: req => ({
     ...req,
