@@ -22,6 +22,12 @@ const resolvers = {
   Mutation: {
     createDraft: (parent, { title, text }, ctx: Context, info) => {
       return ctx.db.mutation.createPost({ data: { text, title, isPublished: false} }, info)
+    },
+    deletePost: (parent, { id }, ctx: Context, info) => {
+     return ctx.db.mutation.deletePost({ where: { id } })
+    },
+    publish: (_, { id, isPublished, text, title }, ctx: Context, info) => {
+      return ctx.db.mutation.updatePost({ where: { id }, data: {isPublished:true, text, title } }, info)
     }
   }
 }
